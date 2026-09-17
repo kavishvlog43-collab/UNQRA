@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="UNQRA — rare, unique and handpicked streetwear.">
+<title>UNQRA — Rare Fashion</title>
+<style>
+:root{--bg:#070707;--card:#111;--line:#262626;--text:#f5f5f5;--muted:#a0a0a0;--white:#fff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.nav{height:72px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 6%;position:sticky;top:0;background:rgba(7,7,7,.94);backdrop-filter:blur(12px);z-index:20}
+.logo{font-size:25px;font-weight:900;letter-spacing:5px}
+.navlinks{display:flex;gap:28px;color:#ccc;font-size:14px}
+.navlinks a:hover{color:#fff}
+.cart{border:1px solid #444;background:#fff;color:#000;padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:700}
+.hero{min-height:78vh;display:flex;align-items:center;padding:70px 7%;border-bottom:1px solid var(--line);background:radial-gradient(circle at 75% 35%,#242424 0,#111 24%,#070707 58%)}
+.hero-content{max-width:720px}
+.kicker{text-transform:uppercase;letter-spacing:4px;color:#aaa;font-size:12px;margin-bottom:22px}
+h1{font-size:clamp(56px,10vw,125px);line-height:.85;margin:0 0 28px;letter-spacing:-6px}
+.hero p{max-width:560px;color:#bdbdbd;font-size:18px;line-height:1.6}
+.btn{display:inline-block;margin-top:18px;background:#fff;color:#000;padding:14px 23px;border-radius:4px;font-weight:800;border:0;cursor:pointer}
+.section{padding:70px 6%}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:28px}
+.section h2{font-size:34px;margin:0}
+.section-head span{color:var(--muted);font-size:13px}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.category{padding:28px 20px;border:1px solid var(--line);background:#0c0c0c;min-height:120px;display:flex;align-items:end;font-size:21px;font-weight:800}
+.category:hover{background:#151515}
+.products{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.product{background:var(--card);border:1px solid var(--line);overflow:hidden}
+.pic{aspect-ratio:4/5;background:linear-gradient(145deg,#242424,#0b0b0b);display:flex;align-items:center;justify-content:center;color:#555;font-size:12px;letter-spacing:2px}
+.product-info{padding:16px}
+.product-info h3{margin:0 0 7px;font-size:16px}
+.product-info p{margin:0 0 14px;color:#999;font-size:13px}
+.price{font-weight:900;margin-bottom:12px}
+.add{width:100%;padding:11px;border:1px solid #444;background:#fff;color:#000;font-weight:800;cursor:pointer}
+.badge{display:inline-block;font-size:10px;letter-spacing:1px;border:1px solid #555;padding:5px 7px;margin-bottom:12px;color:#ccc}
+.banner{margin:0 6%;padding:55px 7%;border:1px solid var(--line);background:#101010;text-align:center}
+.banner h2{font-size:42px;margin:0 0 12px}
+.banner p{color:#aaa;margin:0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:25px}
+.feature{border:1px solid var(--line);padding:25px;background:#0d0d0d}
+.feature b{display:block;margin-bottom:8px}.feature span{color:#999;font-size:13px;line-height:1.5}
+footer{border-top:1px solid var(--line);margin-top:70px;padding:35px 6%;display:flex;justify-content:space-between;color:#888;font-size:13px}
+.cart-panel{position:fixed;right:-390px;top:0;width:360px;max-width:92%;height:100%;background:#0d0d0d;border-left:1px solid #333;z-index:50;padding:25px;transition:.3s;box-shadow:-20px 0 60px #000}
+.cart-panel.open{right:0}
+.cart-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292929;padding-bottom:16px}
+.close{background:none;color:#fff;border:0;font-size:25px;cursor:pointer}
+.cart-items{padding:20px 0;min-height:220px}
+.cart-item{display:flex;justify-content:space-between;border-bottom:1px solid #222;padding:13px 0;font-size:14px}
+.total{border-top:1px solid #333;padding-top:15px;font-size:18px;font-weight:900}
+.checkout{width:100%;padding:14px;margin-top:14px;border:0;background:#fff;color:#000;font-weight:900;cursor:pointer}
+.note{font-size:11px;color:#777;line-height:1.5;margin-top:12px}
+@media(max-width:800px){
+.nav{padding:0 5%}.navlinks{display:none}.hero{min-height:70vh;padding:60px 6%}
+.categories{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr);gap:10px}
+.section{padding:55px 5%}.section h2{font-size:28px}.features{grid-template-columns:1fr}
+.banner{margin:0 5%;padding:42px 20px}.banner h2{font-size:32px}
+footer{flex-direction:column;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="logo" href="#">UNQRA</a>
+  <div class="navlinks">
+    <a href="#shop">Shop</a>
+    <a href="#categories">Categories</a>
+    <a href="#about">About</a>
+  </div>
+  <button class="cart" onclick="toggleCart()">Cart (<span id="count">0</span>)</button>
+</nav>
+
+<header class="hero">
+  <div class="hero-content">
+    <div class="kicker">Rare pieces • Limited drops • Streetwear</div>
+    <h1>WEAR<br>UNQRA.</h1>
+    <p>Handpicked shirts, T-shirts, jeans, hoodies and caps for people who don't want to look like everyone else.</p>
+    <a class="btn" href="#shop">SHOP THE DROP</a>
+  </div>
+</header>
+
+<section class="section" id="categories">
+  <div class="section-head"><h2>Categories</h2><span>Explore the collection</span></div>
+  <div class="categories">
+    <a class="category" href="#shop">T-Shirts</a>
+    <a class="category" href="#shop">Shirts</a>
+    <a class="category" href="#shop">Jeans</a>
+    <a class="category" href="#shop">Hoodies & Caps</a>
+  </div>
+</section>
+
+<section class="section" id="shop">
+  <div class="section-head"><h2>Rare Drops</h2><span>New pieces added regularly</span></div>
+  <div class="products">
+    <article class="product">
+      <div class="pic">PRODUCT IMAGE</div>
+      <div class="product-info"><span class="badge">ONE PIECE</span><h3>Vintage Graphic Tee</h3><p>Size M • Excellent condition</p><div class="price">₹699</div><button class="add" onclick="addToCart('Vintage Graphic Tee',699)">ADD TO CART</button></div>
+    </article>
+    <article class="product">
+      <div class="pic">PRODUCT IMAGE</div>
+      <div class="product-info"><span class="badge">RARE FIND</span><h3>Oversized Street Shirt</h3><p>Size L • Excellent condition</p><div class="price">₹899</div><button class="add" onclick="addToCart('Oversized Street Shirt',899)">ADD TO CART</button></div>
+    </article>
+    <article class="product">
+      <div class="pic">PRODUCT IMAGE</div>
+      <div class="product-info"><span class="badge">LIMITED</span><h3>Classic Baggy Jeans</h3><p>Size 32 • Excellent condition</p><div class="price">₹1,099</div><button class="add" onclick="addToCart('Classic Baggy Jeans',1099)">ADD TO CART</button></div>
+    </article>
+    <article class="product">
+      <div class="pic">PRODUCT IMAGE</div>
+      <div class="product-info"><span class="badge">NEW DROP</span><h3>Minimal Black Hoodie</h3><p>Size L • Excellent condition</p><div class="price">₹1,299</div><button class="add" onclick="addToCart('Minimal Black Hoodie',1299)">ADD TO CART</button></div>
+    </article>
+  </div>
+</section>
+
+<div class="banner">
+  <h2>ONE OF FEW.</h2>
+  <p>We hunt for pieces that stand out. When it's gone, it's gone.</p>
+</div>
+
+<section class="section" id="about">
+  <div class="section-head"><h2>Why UNQRA?</h2></div>
+  <div class="features">
+    <div class="feature"><b>Rare Selection</b><span>Every piece is selected for its style, character and uniqueness.</span></div>
+    <div class="feature"><b>COD + UPI</b><span>Pay your way with Cash on Delivery or UPI at checkout.</span></div>
+    <div class="feature"><b>Quality Checked</b><span>Product condition and sizing are shown clearly before you order.</span></div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 UNQRA. All rights reserved.</div>
+  <div>Instagram • WhatsApp • COD • UPI</div>
+</footer>
+
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-head"><h2>Your Cart</h2><button class="close" onclick="toggleCart()">×</button></div>
+  <div class="cart-items" id="cartItems"><p style="color:#777">Your cart is empty.</p></div>
+  <div class="total">Total: ₹<span id="total">0</span></div>
+  <button class="checkout" onclick="checkout()">CHECKOUT</button>
+  <div class="note">Demo checkout: connect your preferred payment gateway and order/WhatsApp system before accepting real payments.</div>
+</aside>
+
+<script>
+let cart=[];
+function addToCart(name,price){
+  cart.push({name,price});
+  renderCart();
+  document.getElementById('cartPanel').classList.add('open');
+}
+function renderCart(){
+  document.getElementById('count').textContent=cart.length;
+  const box=document.getElementById('cartItems');
+  if(!cart.length){box.innerHTML='<p style="color:#777">Your cart is empty.</p>';document.getElementById('total').textContent='0';return;}
+  box.innerHTML=cart.map((x,i)=>`<div class="cart-item"><span>${x.name}</span><span>₹${x.price} <button onclick="removeItem(${i})" style="background:none;color:#aaa;border:0;cursor:pointer">×</button></span></div>`).join('');
+  document.getElementById('total').textContent=cart.reduce((s,x)=>s+x.price,0);
+}
+function removeItem(i){cart.splice(i,1);renderCart();}
+function toggleCart(){document.getElementById('cartPanel').classList.toggle('open');}
+function checkout(){
+  if(!cart.length){alert('Your cart is empty.');return;}
+  alert('Checkout demo ready. Add your UPI/payment gateway and COD order form to accept real orders.');
+}
+</script>
+</body>
+</html>
